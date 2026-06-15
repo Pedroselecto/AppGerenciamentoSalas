@@ -15,7 +15,7 @@ Aplicativo Android desenvolvido para otimizar o gerenciamento de salas, permitin
 3. Clone este repositório do aplicativo Android e abra-o no Android Studio.
 4. Execute o projeto em um emulador.
 
-## Prints/Screenshots do Aplicativo
+## Prints do Aplicativo
 
 <img width="267" height="570" alt="telaDeLoginApp" src="https://github.com/user-attachments/assets/50e90a55-49cd-49d8-a354-1833526930da" />
 
