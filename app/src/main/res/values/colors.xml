@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+
+    <color name="navy_blue">#131F33</color>
+    <color name="ibmec_yellow">#F5AC00</color>
+
+    <color name="off_white">#F5F5F0</color>
+    <color name="gray_text">#6B7280</color>
+    <color name="gray_border">#D1D5DB</color>
+</resources>
