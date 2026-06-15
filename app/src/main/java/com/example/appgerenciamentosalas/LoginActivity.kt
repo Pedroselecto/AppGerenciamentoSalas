@@ -25,11 +25,8 @@ class LoginActivity : AppCompatActivity() {
             if (email.isEmpty() || senha.isEmpty()) {
                 Toast.makeText(this, "Preencha e-mail e senha!", Toast.LENGTH_SHORT).show()
             } else {
-                // INTENT EXPLÍCITA: Sai da LoginActivity e vai para a MainActivity
                 val intent = Intent(this, MainActivity::class.java)
                 startActivity(intent)
-
-                // Finaliza a tela de login para que o usuário não volte para ela se apertar o botão "Voltar" do celular
                 finish()
             }
         }
