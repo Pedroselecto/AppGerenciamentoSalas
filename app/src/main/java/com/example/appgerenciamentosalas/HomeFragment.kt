@@ -13,7 +13,7 @@ import com.example.appgerenciamentosalas.api.RetrofitClient
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import java.util.Calendar // Alterado para garantir compatibilidade total
+import java.util.Calendar
 
 class HomeFragment : Fragment() {
 
@@ -59,13 +59,12 @@ class HomeFragment : Fragment() {
                     if (response.isSuccessful && response.body() != null) {
                         val aulasDeHoje = response.body()!!
 
-                        // Configura o adapter passando a lista e a ação de clique vazia
-                        listaDeAulas.adapter = AulaAdapter(aulasDeHoje) { aulaClicada ->
-                            Toast.makeText(
-                                requireContext(),
-                                "Acesse a aba 'Aulas' para gerenciar ou remover.",
-                                Toast.LENGTH_SHORT
-                            ).show()
+                        // Configura o adapter passando a lista e ocultando o botão de remover
+                        listaDeAulas.adapter = AulaAdapter(
+                            listaAulas = aulasDeHoje,
+                            mostrarBotaoDeletar = false // <-- Alteração feita aqui
+                        ) {
+                            // Callback vazio, pois o botão estará oculto (GONE) nesta tela
                         }
 
                     } else {

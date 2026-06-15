@@ -10,7 +10,8 @@ import com.example.appgerenciamentosalas.api.AulaResponseDto
 
 class AulaAdapter(
     private val listaAulas: List<AulaResponseDto>,
-    private val onDeletarClique: (AulaResponseDto) -> Unit // 1. Adicionado o callback de clique
+    private val mostrarBotaoDeletar: Boolean = true,
+    private val onDeletarClique: (AulaResponseDto) -> Unit
 ) : RecyclerView.Adapter<AulaAdapter.AulaViewHolder>() {
 
     class AulaViewHolder(view: View) : RecyclerView.ViewHolder(view) {
@@ -19,8 +20,6 @@ class AulaAdapter(
         val txtProfessor: TextView = view.findViewById(R.id.txtProfessorItem)
         val txtHorario: TextView = view.findViewById(R.id.txtHorarioItem)
         val txtSala: TextView = view.findViewById(R.id.txtSalaItem)
-
-        // 2. Mapeia o ícone de menos vermelho do layout
         val btnDeletar: ImageView = view.findViewById(R.id.btnDeletarItem)
     }
 
@@ -36,16 +35,20 @@ class AulaAdapter(
         holder.txtCurso.text = aula.curso
         holder.txtProfessor.text = "Prof. ${aula.professor}"
 
-        // 1. Pegamos o dia ("SEGUNDA") e formatamos para ficar bonito ("Segunda")
         val diaFormatado = aula.diaDaSemana.lowercase().replaceFirstChar { it.uppercase() }
-
-        // 2. Juntamos o dia formatado com os horários
         holder.txtHorario.text = "$diaFormatado • ${aula.horarioInicio.substring(0, 5)} - ${aula.horarioFim.substring(0, 5)}"
 
         holder.txtSala.text = aula.localizacaoDaSala
 
-        holder.btnDeletar.setOnClickListener {
-            onDeletarClique(aula)
+        // Lógica adicionada para exibir ou ocultar o botão de acordo com a tela
+        if (mostrarBotaoDeletar) {
+            holder.btnDeletar.visibility = View.VISIBLE
+            holder.btnDeletar.setOnClickListener {
+                onDeletarClique(aula)
+            }
+        } else {
+            // Trocamos de GONE para INVISIBLE: O botão some, mas o espaço dele é preservado!
+            holder.btnDeletar.visibility = View.INVISIBLE
         }
     }
 
