@@ -40,14 +40,12 @@ class AulaAdapter(
 
         holder.txtSala.text = aula.localizacaoDaSala
 
-        // Lógica adicionada para exibir ou ocultar o botão de acordo com a tela
         if (mostrarBotaoDeletar) {
             holder.btnDeletar.visibility = View.VISIBLE
             holder.btnDeletar.setOnClickListener {
                 onDeletarClique(aula)
             }
         } else {
-            // Trocamos de GONE para INVISIBLE: O botão some, mas o espaço dele é preservado!
             holder.btnDeletar.visibility = View.INVISIBLE
         }
     }

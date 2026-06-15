@@ -18,15 +18,12 @@ interface AulaApi {
         @Field("sala_id") salaId: Int
     ): Call<Void>
 
-    // 1. Endpoint para buscar as aulas do dia atual (usado na Home)
     @GET("aulas/filtrar")
     fun buscarAulasPorDia(@Query("dia") dia: String): Call<List<AulaResponseDto>>
 
-    // 2. Endpoint para listar todas as aulas (usado na tela de Aulas)
     @GET("aulas")
     fun listarAulas(): Call<List<AulaResponseDto>>
 
-    // 3. Endpoint para deletar a aula por ID
     @DELETE("aulas/{id}")
     fun deletarAula(@Path("id") id: Int): Call<Void>
 }

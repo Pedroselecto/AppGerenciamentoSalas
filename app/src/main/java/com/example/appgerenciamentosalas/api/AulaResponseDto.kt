@@ -6,7 +6,7 @@ data class AulaResponseDto(
     val turno: String,
     val curso: String,
     val diaDaSemana: String,
-    val horarioInicio: String, // String é mais seguro para receber o formato HH:mm:ss do JSON
+    val horarioInicio: String,
     val horarioFim: String,
     val professor: String,
     val localizacaoDaSala: String

@@ -36,11 +36,9 @@ class HomeFragment : Fragment() {
     }
 
     private fun carregarAulasDoDiaAtual() {
-        // 1. Captura o dia usando a classe Calendar (compatível com qualquer Android)
         val calendar = Calendar.getInstance()
         val diaDaSemana = calendar.get(Calendar.DAY_OF_WEEK)
 
-        // 2. Traduz os inteiros do Calendar para as Strings do seu Enum
         val diaEnum = when (diaDaSemana) {
             Calendar.MONDAY -> "SEGUNDA"
             Calendar.TUESDAY -> "TERCA"
@@ -52,19 +50,16 @@ class HomeFragment : Fragment() {
             else -> "SEGUNDA"
         }
 
-        // 3. Faz a chamada para o Spring Boot
         RetrofitClient.aulaApi.buscarAulasPorDia(diaEnum).enqueue(object : Callback<List<AulaResponseDto>> {
             override fun onResponse(call: Call<List<AulaResponseDto>>, response: Response<List<AulaResponseDto>>) {
                 if (isAdded) {
                     if (response.isSuccessful && response.body() != null) {
                         val aulasDeHoje = response.body()!!
 
-                        // Configura o adapter passando a lista e ocultando o botão de remover
                         listaDeAulas.adapter = AulaAdapter(
                             listaAulas = aulasDeHoje,
-                            mostrarBotaoDeletar = false // <-- Alteração feita aqui
+                            mostrarBotaoDeletar = false
                         ) {
-                            // Callback vazio, pois o botão estará oculto (GONE) nesta tela
                         }
 
                     } else {

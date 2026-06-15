@@ -50,7 +50,6 @@ class SalaAdapter(
             holder.txtNomeSala.text = item.nome
             holder.txtCapacidade.text = "Tipo: ${item.tipo}"
 
-            // Controle de cores do Status
             if (item.estaLivre) {
                 holder.indicadorStatus.setCardBackgroundColor(Color.parseColor("#10B981"))
                 holder.txtStatusTexto.text = "Livre"
@@ -61,7 +60,6 @@ class SalaAdapter(
                 holder.txtStatusTexto.setTextColor(Color.parseColor("#EF4444"))
             }
 
-            // Ação do Botão Adicionar
             holder.btnAdicionarAula.setOnClickListener {
                 onAddClick(item)
             }

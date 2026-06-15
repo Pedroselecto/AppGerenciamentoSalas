@@ -15,12 +15,10 @@ class MainActivity : AppCompatActivity() {
 
         val bottomNavigation = findViewById<BottomNavigationView>(R.id.bottomNavigation)
 
-        // Ao abrir o app, carrega o HomeFragment por padrão
         if (savedInstanceState == null) {
             substituirFragment(HomeFragment())
         }
 
-        // Escuta os cliques na barra inferior
         bottomNavigation.setOnItemSelectedListener { item ->
             when (item.itemId) {
                 R.id.nav_home -> {
@@ -40,13 +38,11 @@ class MainActivity : AppCompatActivity() {
                     true
                 }
 
-                // As outras telas (Salas e Aulas) faremos depois!
                 else -> false
             }
         }
     }
 
-    // Função mágica que troca os Fragments na tela
     private fun substituirFragment(fragment: Fragment) {
         supportFragmentManager.beginTransaction()
             .replace(R.id.fragmentContainer, fragment)

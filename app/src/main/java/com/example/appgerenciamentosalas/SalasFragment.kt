@@ -37,7 +37,6 @@ class SalasFragment : Fragment() {
         listaDeSalas = view.findViewById(R.id.listaDeSalas)
         listaDeSalas.layoutManager = LinearLayoutManager(requireContext())
 
-        // Chama a função que busca os dados no Spring Boot
         buscarSalasDoBanco()
     }
 
@@ -55,8 +54,8 @@ class SalasFragment : Fragment() {
                 }
             }
 
-            override fun onFailure(call: Call<List<SalaResponseDto>>, t: Throwable) {
-                Log.e("API_ERRO", "Falha na conexão: ${t.message}")
+            override fun onFailure(call: Call<List<SalaResponseDto>>, throwable: Throwable) {
+                Log.e("API_ERRO", "Falha na conexão: ${throwable.message}")
                 Toast.makeText(context, "Sem conexão com o servidor", Toast.LENGTH_SHORT).show()
             }
         })
@@ -65,26 +64,20 @@ class SalasFragment : Fragment() {
     private fun processarEExibirSalas(salasDoBanco: List<SalaResponseDto>) {
         val dadosAgrupados = mutableListOf<ItemLista>()
 
-        // 1. O groupBy do Kotlin cria um Map separando as salas pelas chaves (ex: "PRIMEIRO", "SEGUNDO")
         val salasPorAndar = salasDoBanco.groupBy { it.andar }
 
-        // 2. Para cada Andar, criamos um Cabeçalho e depois listamos as salas dele
         salasPorAndar.forEach { (andarEnum, listaDeSalasDoAndar) ->
 
-            // Formatação do Andar que fizemos antes
             val andarFormatado = andarEnum.lowercase().replaceFirstChar { it.uppercase() }
             dadosAgrupados.add(ItemLista.CabecalhoAndar("$andarFormatado Andar"))
 
-            // Adiciona as salas do andar
             listaDeSalasDoAndar.forEach { sala ->
 
-                // O nosso "Tradutor" de UX
-                // O nosso "Tradutor" de UX
                 val tipoAmigavel = when (sala.tipo) {
                     "LABORATORIO" -> "Laboratório"
                     "TECH" -> "Tech"
                     "PREMIUM" -> "Premium"
-                    "REGULAR" -> "Regular" // Oficializado aqui!
+                    "REGULAR" -> "Regular"
                     else -> sala.tipo.lowercase().replaceFirstChar { it.uppercase() }
                 }
 
@@ -92,7 +85,7 @@ class SalasFragment : Fragment() {
                     ItemLista.Sala(
                         id = sala.id,
                         nome = "Sala ${sala.numero}",
-                        tipo = tipoAmigavel, // Injetamos o nome amigável aqui
+                        tipo = tipoAmigavel,
                         estaLivre = true
                     )
                 )
@@ -109,17 +102,14 @@ class SalasFragment : Fragment() {
         val builder = AlertDialog.Builder(requireContext()).setView(dialogView)
         val dialog = builder.create()
 
-        // 1. Busca as referências dos Dropdowns (Spinners)
         val spinnerTurno = dialogView.findViewById<Spinner>(R.id.spinnerTurno)
         val spinnerCurso = dialogView.findViewById<Spinner>(R.id.spinnerCurso)
         val spinnerDia = dialogView.findViewById<Spinner>(R.id.spinnerDia)
 
-        // 2. Cria as listas idênticas aos seus Enums no Spring Boot
         val listaTurnos = arrayOf("MANHA", "TARDE", "NOITE")
         val listaCursos = arrayOf("TECH", "DIREITO", "ECONOMIA", "PUBLICIDADE")
         val listaDias = arrayOf("SEGUNDA", "TERCA", "QUARTA", "QUINTA", "SEXTA", "SABADO")
 
-        // 3. Conecta as listas aos Spinners usando um Adapter padrão do Android
         spinnerTurno.adapter = ArrayAdapter(
             requireContext(),
             android.R.layout.simple_spinner_dropdown_item,
@@ -139,7 +129,6 @@ class SalasFragment : Fragment() {
             val inicio = dialogView.findViewById<EditText>(R.id.edtInicio).text.toString()
             val fim = dialogView.findViewById<EditText>(R.id.edtFim).text.toString()
 
-            // 4. Captura a opção selecionada nos Dropdowns
             val turnoSelecionado = spinnerTurno.selectedItem.toString()
             val cursoSelecionado = spinnerCurso.selectedItem.toString()
             val diaSelecionado = spinnerDia.selectedItem.toString()
@@ -153,7 +142,6 @@ class SalasFragment : Fragment() {
                             Toast.makeText(requireContext(), "Aula agendada com sucesso!", Toast.LENGTH_SHORT).show()
                             dialog.dismiss()
                         } else {
-                            // Se bater no servidor mas ele rejeitar (ex: horário no formato errado)
                             Toast.makeText(requireContext(), "Erro do servidor: ${response.code()}", Toast.LENGTH_LONG).show()
                             Log.e("POST_AULA", "Corpo do erro: ${response.errorBody()?.string()}")
                         }
@@ -163,7 +151,6 @@ class SalasFragment : Fragment() {
                 override fun onFailure(call: Call<Void>, t: Throwable) {
                     if (isAdded) {
                         Toast.makeText(requireContext(), "Falha na conexão, verifique o Logcat", Toast.LENGTH_SHORT).show()
-                        // AQUI vamos descobrir o erro verdadeiro caso não seja o Finsky!
                         Log.e("POST_AULA_REAL", "Erro exato: ${t.message}")
                     }
                 }

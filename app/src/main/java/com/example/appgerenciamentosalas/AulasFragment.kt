@@ -41,13 +41,12 @@ class AulasFragment : Fragment() {
                     configurarLista(response.body()!!)
                 }
             }
-            override fun onFailure(call: Call<List<AulaResponseDto>>, t: Throwable) { /* Tratar falha */ }
+            override fun onFailure(call: Call<List<AulaResponseDto>>, t: Throwable) {  }
         })
     }
 
     private fun configurarLista(lista: List<AulaResponseDto>) {
         recyclerAulas.adapter = AulaAdapter(lista) { aulaSelecionada ->
-            // Abre o aviso de confirmação exigido pelo professor
             mostrarConfirmacaoDelecao(aulaSelecionada)
         }
     }
@@ -58,7 +57,6 @@ class AulasFragment : Fragment() {
             .setMessage("Tem certeza que deseja cancelar e excluir a aula de ${aula.disciplina}?")
             .setNegativeButton("Cancelar", null)
             .setPositiveButton("Sim, Remover") { _, _ ->
-                // Se clicar em sim, chama o DELETE na API
                 executarDelecaoNoServidor(aula.id)
             }
             .show()
@@ -69,7 +67,6 @@ class AulasFragment : Fragment() {
             override fun onResponse(call: Call<Void>, response: Response<Void>) {
                 if (isAdded && response.isSuccessful) {
                     Toast.makeText(requireContext(), "Aula removida com sucesso!", Toast.LENGTH_SHORT).show()
-                    // Atualiza a lista na tela para sumir com o card deletado
                     carregarTodasAsAulas()
                 } else {
                     Toast.makeText(requireContext(), "Não foi possível remover a aula", Toast.LENGTH_SHORT).show()

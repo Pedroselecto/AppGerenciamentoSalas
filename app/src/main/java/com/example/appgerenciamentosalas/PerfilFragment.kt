@@ -20,8 +20,6 @@ class PerfilFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        // --- INTENT IMPLÍCITA (SUPORTE) ---
-        // Mude de <Button> para <View> ou <androidx.cardview.widget.CardView>
         val btnSuporte = view.findViewById<View>(R.id.btnSuporteIbmec)
         btnSuporte.setOnClickListener {
             val linkIbmec = Uri.parse("https://www.ibmec.br")
@@ -29,8 +27,6 @@ class PerfilFragment : Fragment() {
             startActivity(intentImplicita)
         }
 
-        // --- INTENT EXPLÍCITA (SAIR / LOGOUT) ---
-        // Mude de <Button> para <View> também
         val btnSair = view.findViewById<View>(R.id.btnSairPerfil)
         btnSair.setOnClickListener {
             val intentExplicita = Intent(requireContext(), LoginActivity::class.java)
