@@ -6,23 +6,22 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatDelegate
 
 class LoginActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
         setContentView(R.layout.activity_login)
 
-        // 1. Mapeando os componentes visuais do XML para o Kotlin
         val edtEmail = findViewById<EditText>(R.id.edtEmail)
         val edtSenha = findViewById<EditText>(R.id.edtSenha)
         val btnEntrar = findViewById<Button>(R.id.btnEntrar)
 
-        // 2. Ação de clique no botão
         btnEntrar.setOnClickListener {
             val email = edtEmail.text.toString()
             val senha = edtSenha.text.toString()
 
-            // Validação simples para não deixar campos vazios
             if (email.isEmpty() || senha.isEmpty()) {
                 Toast.makeText(this, "Preencha e-mail e senha!", Toast.LENGTH_SHORT).show()
             } else {
